@@ -1,0 +1,152 @@
+<html>
+
+	<head>
+		<title>Tic Tac Toe</title>
+		
+		<style>
+			*{
+			--width: 90vmin;
+			--height: 30vmin;
+			}
+			
+			body{
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			body h1{
+				margin-left: 50px;
+			}
+			
+			.main{
+				width: var(--width);
+				height: var(--width);
+				background: linear-gradient(#f0f, #0f0, #f0f, #0f0);
+				overflow: hidden;
+				
+				border: 1px solid black;
+			}
+			
+			.row{
+				width: var(--width);
+				height: var(--height);
+				display: flex;
+			}
+			.col{
+				width: 33%;
+				height: 100%;
+				border: 1px solid black;
+				
+				display: flex;
+			}
+			.col:after{
+				margin: auto;
+				line-height: 100%;
+				font-size: 30vmin;
+			}
+			.col[value="x"]:after{
+				content: "X";
+			}
+			.col[value="o"]:after{
+				content: "O";
+			}
+		</style>
+		
+		<script>
+			var currentPlayer = 1;
+			var moves = 0;
+			
+			function restart() {
+				currentPlayer = 1;
+				moves = 0;
+				document.querySelectorAll(".row .col").forEach((elem, index) => {
+					elem.setAttribute("value", "");
+				});
+				document.querySelector("h1").innerHTML = "Зараз ходять хрестики!";
+			}
+			
+			window.onload = function() {
+				restart();
+				let cols = document.querySelectorAll(".row .col");
+				cols.forEach((elem, index) => {
+					elem.onclick = function() {
+						if (elem.getAttribute("value") == "x" || elem.getAttribute("value") == "o") {
+							alert("Клітинка зайнята!");
+							return;
+						}
+						moves++;
+						// processing if x or o moves now
+						if (currentPlayer == 1)
+						{
+							elem.setAttribute("value", "x");
+							currentPlayer = 2;
+							document.querySelector("h1").innerHTML = "Зараз ходять нулики!";
+						}
+						else if (currentPlayer == 2)
+						{
+							elem.setAttribute("value", "o");
+							currentPlayer = 1;
+							document.querySelector("h1").innerHTML = "Зараз ходять хрестики!";
+						}
+						
+						setTimeout(function () {
+							if ((cols[0].getAttribute("value") != "" && cols[0].getAttribute("value") == cols[1].getAttribute("value") && cols[0].getAttribute("value") == cols[2].getAttribute("value")) ||
+							(cols[3].getAttribute("value") != "" && cols[3].getAttribute("value") == cols[4].getAttribute("value") && cols[3].getAttribute("value") == cols[5].getAttribute("value")) ||
+							(cols[6].getAttribute("value") != "" && cols[6].getAttribute("value") == cols[7].getAttribute("value") && cols[6].getAttribute("value") == cols[8].getAttribute("value")) ||
+							(cols[0].getAttribute("value") != "" && cols[0].getAttribute("value") == cols[3].getAttribute("value") && cols[0].getAttribute("value") == cols[6].getAttribute("value")) ||
+							(cols[1].getAttribute("value") != "" && cols[1].getAttribute("value") == cols[4].getAttribute("value") && cols[1].getAttribute("value") == cols[7].getAttribute("value")) ||
+							(cols[2].getAttribute("value") != "" && cols[2].getAttribute("value") == cols[5].getAttribute("value") && cols[2].getAttribute("value") == cols[8].getAttribute("value")) ||
+							(cols[0].getAttribute("value") != "" && cols[0].getAttribute("value") == cols[4].getAttribute("value") && cols[0].getAttribute("value") == cols[8].getAttribute("value")) ||
+							(cols[2].getAttribute("value") != "" && cols[2].getAttribute("value") == cols[4].getAttribute("value") && cols[2].getAttribute("value") == cols[6].getAttribute("value")))
+							{
+								if (currentPlayer == 1) {
+									alert("Переміг гравець O! Вітаємо!");
+								}
+								if (currentPlayer == 2) {
+									alert("Переміг гравець X! Вітаємо!");
+								}
+								restart();
+							}
+							
+							if (moves == 9) {
+								setTimeout(function() {
+									alert("Гру завершено, нічия!");
+									
+									restart();
+									
+								}, 1);
+							}
+							
+						}, 1);
+						
+
+						
+					};
+				});
+			}
+		</script>
+		
+	</head>
+
+	<body>
+		<div class="main">
+			<div class="row">
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col"></div>
+			</div>
+			<div class="row">
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col"></div>
+			</div>
+			<div class="row">
+				<div class="col"></div>
+				<div class="col"></div>
+				<div class="col"></div>
+			</div>
+		</div>
+		<h1>Зараз ходять хрестики</h1>
+	</body>
+	
+</html>
